@@ -10,7 +10,8 @@ export NVM_DIR="$HOME/.nvm"
 
 #编辑器
 export EDITOR=vim
-
+# 自动更新的时间间隔，单位是天，这里设置 30 天更新一次
+export UPDATE_ZSH_DAYS=30
 #History setup
 export HISTSIZE=100000
 export SAVEHIST=100000
@@ -80,6 +81,7 @@ sourceZsh(){
     source ~/.zshrc
     backupToDrive ~/.zshrc
     echo "New .zshrc sourced."
+    return
 }
 
 editZsh(){
@@ -88,10 +90,12 @@ editZsh(){
     source ~/.zshrc
     backupToDrive ~/.zshrc
     echo "New .zshrc sourced."
+    return
 }
 
-updateYadm() {
+updateYad() {
     yadm pull
+    return
 }
 
 backupToDrive(){
@@ -99,4 +103,5 @@ backupToDrive(){
     yadm commit -m "updated .zshrc"
     yadm push
     echo "New .zshrc backed up to yadm."
+    return
 }
