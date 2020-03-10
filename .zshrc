@@ -38,6 +38,12 @@ zstyle ':completion:*' verbose yes
 RPROMPT=$(echo "$RED%D %T$FINISH")
 PROMPT=$(echo "$CYAN%n@$YELLOW%M:$GREEN%/$_YELLOW>$FINISH ")
 
+# Tab title
+precmd() {
+  # sets the tab title to current dir
+  echo -ne "\e]1;${PWD##*/}\a"
+}
+
 plugins=(git npm z nvm sudo web-search node autojump zsh-syntax-highlighting zsh-completions zsh-autosuggestions last-working-dir wd)
 
 # Aliases
@@ -55,6 +61,7 @@ alias -g G='| grep' # now you can do: ls foo G something
 source /Users/zhaofangyi/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
+
 sourceZsh (){
     source ~/.zshrc
     backupToDrive ~/.zshrc
@@ -78,4 +85,26 @@ backupToDrive() {
     yadm commit -m "updated .zshrc"
     yadm push
     echo "New .zshrc backed up to yadm."
+}
+
+# Create a new react app
+
+react-app() {
+  npx create-react-app $1
+  cd $1
+  npm i -D eslint
+  npm i -D eslint-config-prettier eslint-plugin-prettier
+  npm i -D eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks
+  cp "${HOME}/.eslintrc.json" .
+  cp "${HOME}/.prettierrc" .
+  echo $1 > README.md
+  rm -rf yarn.lock
+  cd src
+  rm -f App.css App.test.js index.css logo.svg serviceWorker.js
+  mkdir components views 
+  git add -A
+  git commit -m "Initial commit."
+  cd ..
+  clear
+  code .
 }
