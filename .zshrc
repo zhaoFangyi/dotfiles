@@ -2,11 +2,12 @@
 # This loads nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Path to your oh-my-zsh installation.
-#export ZSH=/Users/zhaofangyi/.oh-my-zsh
+export ZSH=/Users/zhaofangyi/.oh-my-zsh
 
-#ZSH_THEME="af-magic"
+ZSH_THEME="robbyrussell"
 
 #编辑器
 export EDITOR=vim
@@ -33,36 +34,11 @@ zstyle ':completion:*' group-name '' # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate #enable approximate matches for completion
 zstyle ':completion:*' verbose yes
 
-source $HOME/antigen.zsh
-antigen use oh-my-zsh
+#命令提示符
+RPROMPT=$(echo "$RED%D %T$FINISH")
+PROMPT=$(echo "$CYAN%n@$YELLOW%M:$GREEN%/$_YELLOW>$FINISH ")
 
-antigen bundles <<EOBUNDLES
-    # Bundles from the default repo (robbyrussell's oh-my-zsh)
-    git
-    wd
-    npm
-    nvm
-    node
-    z
-    web-search
-    last-working-dir
-    common-aliases
-    
-
-    # Syntax highlighting bundle.
-    zsh-users/zsh-syntax-highlighting
-
-    # Fish-like auto suggestions
-    zsh-users/zsh-autosuggestions
-
-    # Extra zsh completions
-    zsh-users/zsh-completions
-    zsh-users/zsh-history-substring-search
-EOBUNDLES
-
-antigen theme robbyrussell
-
-antigen apply
+plugins=(git npm z nvm sudo web-search node autojump zsh-syntax-highlighting zsh-completions zsh-autosuggestions last-working-dir wd)
 
 # Aliases
 alias fang="ssh fang"
@@ -76,14 +52,16 @@ alias -g C='| wc -l'
 alias -g N="| /dev/null"
 alias -g G='| grep' # now you can do: ls foo G something
 
+source /Users/zhaofangyi/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-sourceZsh(){
+source $ZSH/oh-my-zsh.sh
+sourceZsh (){
     source ~/.zshrc
-    # backupToDrive ~/.zshrc
+    backupToDrive ~/.zshrc
     echo "New .zshrc sourced."
 }
-export sourceZsh
-editZsh(){
+
+editZsh() {
     updateYadm
     vim ~/.zshrc
     source ~/.zshrc
@@ -91,11 +69,11 @@ editZsh(){
     echo "New .zshrc sourced."
 }
 
-updateYad() {
+updateYadm() {
     yadm pull
 }
 
-backupToDrive(){
+backupToDrive() {
     yadm add ~/.zshrc
     yadm commit -m "updated .zshrc"
     yadm push
