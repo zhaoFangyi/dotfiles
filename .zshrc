@@ -79,23 +79,20 @@ alias -g G='| grep' # now you can do: ls foo G something
 
 sourceZsh(){
     source ~/.zshrc
-    backupToDrive ~/.zshrc
+    # backupToDrive ~/.zshrc
     echo "New .zshrc sourced."
-    return
 }
-
+export sourceZsh
 editZsh(){
     updateYadm
     vim ~/.zshrc
     source ~/.zshrc
     backupToDrive ~/.zshrc
     echo "New .zshrc sourced."
-    return
 }
 
 updateYad() {
     yadm pull
-    return
 }
 
 backupToDrive(){
@@ -103,5 +100,4 @@ backupToDrive(){
     yadm commit -m "updated .zshrc"
     yadm push
     echo "New .zshrc backed up to yadm."
-    return
 }
