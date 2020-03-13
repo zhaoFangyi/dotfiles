@@ -7,7 +7,7 @@ export NVM_DIR="$HOME/.nvm"
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/zhaofangyi/.oh-my-zsh
 
-ZSH_THEME="robbyrussell"
+ZSH_THEME="af-magic"
 
 #编辑器
 export EDITOR=vim
@@ -108,3 +108,6 @@ react-app() {
   clear
   code .
 }
+export PATH="/usr/local/opt/bison/bin:$PATH"
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
