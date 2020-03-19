@@ -4,13 +4,41 @@ syntax on
 set background=dark
 colorscheme solarized
 set showcmd
+" Ignore case when searching
 set ignorecase
+" Enabel filetype plugins
+filetype plugin on
+filetype indent on
 " 高亮搜索
 set hlsearch
-" 设置折叠方式
-set foldmethod=indent
-" 按F2进入粘贴模式
 set pastetoggle=<F2>
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+" Add a bit extra margin to the left
+set foldcolumn=1
+" set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+" Be smart when using tabs ;)
+set smarttab
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" Delete trailing white space on save, useful for some filetypes ;)
+fun! CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+
+if has("autocmd")
+    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+endif
 
 " 一些方便的映射
 let mapleader=","
@@ -58,3 +86,5 @@ let NERDTreeIgnore = [
 let g:ctrlp_map = '<c-p>'
 
 nmap ss <Plug>(easymotion-s2)
+" autocmd FileType python,shell,coffee set commentstring=#\ %s
+" autocmd FileType java,c,cpp,javascript set commentstring=//\ %s
